@@ -16,19 +16,18 @@ pipeline {
 
         stage('Build Docker mmImage') {
             steps {
-                script {
-                    sh "docker build -t ${env.DOCKER_IMAGE_NAME} ."
-                }
+                sh """ 
+                docker build -t ${env.DOCKER_IMAGE_NAME} .
+                """
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                script {
                    sh """
                    docker run -idt -p 8000:8000 --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}
                    """                
-            }
+            
         }
     }
 
