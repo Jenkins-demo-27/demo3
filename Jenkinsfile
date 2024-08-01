@@ -9,7 +9,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Jenkins-demo-27/demo3.git'
+                sh '''
+                git clone 'https://github.com/Jenkins-demo-27/demo3.git'
+                cd demo3
+                '''
             }
         }
         
