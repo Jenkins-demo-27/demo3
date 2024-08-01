@@ -19,10 +19,9 @@ pipeline {
             steps {
                 script {
                     // Get the ldast ceommit message
-                    sh '''
-                    DOCKER_IMAGE_NAME_NEW=$(git log -1 --pretty=%B)
-                    env.DOCKER_IMAGE_NAME = DOCKER_IMAGE_NAME_NEW
-                    '''
+                    env.DOCKER_IMAGE_NAME = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                    // Print out for debugging
+                    echo "Docker Image Name: ${env.DOCKER_IMAGE_NAME}"
                     // Extract image name and tag from the commit message
 
                 }
