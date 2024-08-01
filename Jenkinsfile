@@ -8,22 +8,23 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    sh 'git clone "https://github.com/Jenkins-demo-27/demo3.git"'
-                }
+                sh """
+                git clone "https://github.com/Jenkins-demo-27/demo3.git"
+                cd demo3
+                """
             }
         }
 
         stage('Extract Image Info') {
             steps {
                 script {
-                    // Change directory to the repository
-                    dir('demo3') {
-                        // Get the latest commit message
-                        env.DOCKER_IMAGE_NAME = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                        // Print out for debugging
-                        echo "Docker Image Name: ${env.DOCKER_IMAGE_NAME}"
-                    }
+                    // Get the ldast ceommit message
+                    sh '''
+                    DOCKER_IMAGE_NAME=$(git log -1 --pretty=%B)
+                    echo "Docker Image Name: ${env.DOCKER_IMAGE_NAME}"
+                    '''
+                    // Extract image name and tag from the commit message
+
                 }
             }
         }
@@ -31,11 +32,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    if (env.DOCKER_IMAGE_NAME) {
-                        sh "docker build -t ${env.DOCKER_IMAGE_NAME} ."
-                    } else {
-                        error "DOCKER_IMAGE_NAME is not set. Please ensure the commit message contains the image name."
-                    }
+                    sh "docker build -t ${env.DOCKER_IMAGE_NAME} ."
                 }
             }
         }
@@ -43,11 +40,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    if (env.DOCKER_IMAGE_NAME) {
-                        sh "docker run -d --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}"
-                    } else {
-                        error "DOCKER_IMAGE_NAME is not set. Cannot run Docker container."
-                    }
+                    sh "docker run -d --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}"
                 }
             }
         }
