@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_NAME = ''
+        DOCKER_IMAGE_NAME = sh(git log -1 --pretty=%B)
     }
 
     stages {
@@ -15,19 +15,6 @@ pipeline {
             }
         }
 
-        stage('Extract Image Info') {
-            steps {
-                script {
-                    // Get the ldast ceommit message
-                    sh '''
-                    DOCKER_IMAGE_NAME=$(git log -1 --pretty=%B)
-                    echo "Docker Image Name: ${env.DOCKER_IMAGE_NAME}"
-                    '''
-                    // Extract image name and tag from the commit message
-
-                }
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
