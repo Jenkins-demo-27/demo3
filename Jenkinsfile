@@ -39,7 +39,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh "docker run -d --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}:${env.DOCKER_IMAGE_TAG}"
+                    sh "docker run -d --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}:${env.DOCKER_IMAGE_TAG} -p 8003:8000"
                 }
             }
         }
