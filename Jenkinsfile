@@ -19,16 +19,11 @@ pipeline {
             steps {
                 script {
                     // Get the last commit message
-                    def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-
+                    sh '''
+                    DOCKER_IMAGE_NAME=$(git log -1 --pretty=%B)
+                    '''
                     // Extract image name and tag from the commit message
-                    def matcher = (commitMessage =~ /imageName:(\S+)\s*version:(\S+)/)
-                    if (matcher) {
-                        env.DOCKER_IMAGE_NAME = matcher[0][1]
-                        env.DOCKER_IMAGE_TAG = matcher[0][2]
-                    } else {
-                        error "Commit message does not contain the required 'imageName' and 'version' format."
-                    }
+
                 }
             }
         }
