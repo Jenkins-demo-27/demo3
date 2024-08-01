@@ -20,7 +20,7 @@ pipeline {
         stage('Extract Image Innfo') {
             steps {
                 script {
-                    // Get the last commit message
+                    // Get the last codmmit message
                     def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                     
                     // Extract image name and tag from the commit message
