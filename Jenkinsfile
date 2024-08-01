@@ -18,7 +18,7 @@ pipeline {
         stage('Extract Image Info') {
             steps {
                 script {
-                    // Get the last ceommit message
+                    // Get the ldast ceommit message
                     sh '''
                     DOCKER_IMAGE_NAME=$(git log -1 --pretty=%B)
                     '''
