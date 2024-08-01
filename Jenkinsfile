@@ -19,7 +19,7 @@ pipeline {
         stage('Extract Image Innfo') {
             steps {
                 script {
-                    // Get the last codmmit message
+                    // Get the last c;;odmmit message
                     //def commitMessage = sh(script: 'git log -1 --pretty=%B')
 
                     sh '''
