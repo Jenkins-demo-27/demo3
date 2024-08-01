@@ -19,8 +19,10 @@ pipeline {
             steps {
                 script {
                     // Get the ldast ceommit message
-                         def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                         env.DOCKER_IMAGE_NAME = commitMessage
+                    sh '''
+                    DOCKER_IMAGE=$(git log -1 --pretty=%B)
+                    DOCKER_IMAGE=DOCKER_IMAGE_NAME
+                    '''
                     // Extract image name and tag from the commit message
 
                 }
