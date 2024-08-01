@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_NAME = 'Jen'
+        DOCKER_IMAGE_NAME = ''
     }
 
     stages {
@@ -20,7 +20,8 @@ pipeline {
                 script {
                     // Get the ldast ceommit message
                     sh '''
-                    DOCKER_IMAGE_NAME=$(git log -1 --pretty=%B)
+                    DOCKER_IMAGE_NAME_NEW=$(git log -1 --pretty=%B)
+                    env.DOCKER_IMAGE_NAME = DOCKER_IMAGE_NAME_NEW
                     '''
                     // Extract image name and tag from the commit message
 
