@@ -13,8 +13,7 @@ pipeline {
             }
         }
 
-
-        stage('Build Docker mmImage') {
+        stage('Build Docker Image') {
             steps {
                 sh """ 
                 docker build -t ${env.DOCKER_IMAGE_NAME} .
@@ -24,10 +23,10 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                   sh """
-                   docker run -idt -p 8000:8000 --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}
-                   """                
-            
+                sh """
+                docker run -idt -p 8000:8000 --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}
+                """
+            }
         }
     }
 
