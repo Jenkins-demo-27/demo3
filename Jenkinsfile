@@ -25,9 +25,9 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                sh """
-                docker run  -p 8000:8000 --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}
-                """                
+                   sh """
+                   docker run -idt -p 8000:8000 --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}
+                   """                
             }
         }
     }
