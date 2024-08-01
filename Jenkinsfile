@@ -5,6 +5,7 @@ pipeline {
         DOCKER_IMAGE_NAME = ''
         DOCKER_IMAGE_TAG = ''
     }
+
     
     stages {
         stage('Checkout') {
