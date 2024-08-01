@@ -19,9 +19,8 @@ pipeline {
             steps {
                 script {
                     // Get the ldast ceommit message
-                    sh '''
-                    DOCKER_IMAGE_NAME=$(git log -1 --pretty=%B)
-                    '''
+                              def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                              env.DOCKER_IMAGE_NAME = commitMessage
                     // Extract image name and tag from the commit message
 
                 }
@@ -31,8 +30,13 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${env.DOCKER_IMAGE_NAME} ."
-                }
+                    if (env.DOCKER_IMAGE_NAME) {
+                        sh """
+                        docker build -t ${DOCKER_IMAGE_NAME} .
+                        """
+                    } else {
+                        error "DOCKER_IMAGE_NAME is not set. Please ensure the commit message contains the image name."
+                    }
             }
         }
 
