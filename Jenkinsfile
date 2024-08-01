@@ -20,8 +20,7 @@ pipeline {
                 script {
                     // Get the ldast ceommit message
                     sh '''
-                    DOCKER_IMAGE=$(git log -1 --pretty=%B)
-                    DOCKER_IMAGE_NAME=DOCKER_IMAGE
+                    DOCKER_IMAGE_NAME=$(git log -1 --pretty=%B)
                     '''
                     // Extract image name and tag from the commit message
 
@@ -37,13 +36,7 @@ pipeline {
             }
         }
 
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    sh "docker run -d --name ${env.DOCKER_IMAGE_NAME}-container ${env.DOCKER_IMAGE_NAME}"
-                }
-            }
-        }
+
     }
 
     post {
