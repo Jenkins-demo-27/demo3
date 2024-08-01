@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE_NAME = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
+        DOCKER_IMAGE_NAME = sh(returnStdout: true, script: "git log -1 --pretty=%B").trim()
     }
     stages {
         stage('Checkout') {
