@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Get the last codmmit message
-                    def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                    def commitMessage = sh(script: 'git log -1 --pretty=%B')
                     
                     // Extract image name and tag from the commit message
                     def matcher = (commitMessage =~ /imageName:(\S+)\s*version:(\S+)/)
