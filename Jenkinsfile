@@ -21,7 +21,7 @@ pipeline {
                     // Get the ldast ceommit message
                     sh '''
                     DOCKER_IMAGE=$(git log -1 --pretty=%B)
-                    DOCKER_IMAGE=DOCKER_IMAGE_NAME
+                    DOCKER_IMAGE_NAME=DOCKER_IMAGE
                     '''
                     // Extract image name and tag from the commit message
 
