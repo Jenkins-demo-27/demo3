@@ -13,7 +13,7 @@ pipeline {
             }
         }
         
-        stage('Extract Image Info') {
+        stage('Extract Image Innfo') {
             steps {
                 script {
                     // Get the last commit message
