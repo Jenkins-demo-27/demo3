@@ -3,7 +3,6 @@ pipeline {
     
     environment {
         DOCKER_IMAGE_NAME = ''
-        DOCKER_IMAGE_TAG = ''
     }
 
     
@@ -21,15 +20,19 @@ pipeline {
             steps {
                 script {
                     // Get the last codmmit message
-                    def commitMessage = sh(script: 'git log -1 --pretty=%B')
+                    #def commitMessage = sh(script: 'git log -1 --pretty=%B')
+
+                    sh '''
+                    DOCKER_IMAGE_NAME=$(git log -1 --pretty=%B)
+                    '''
                     
                     // Extract image name and tag from the commit message
-                    def matcher = (commitMessage =~ /imageName:(\S+)\s*version:(\S+)/)
-                    if (matcher) {
-                        DOCKER_IMAGE_NAME = matcher[0][1]
-                        DOCKER_IMAGE_TAG = matcher[0][2]
-                    } else {
-                        error "Commit message does not contain the required 'imageName' and 'version' format."
+                    #def matcher = (commitMessage =~ /imageName:(\S+)\s*version:(\S+)/)
+                    #if (matcher) {
+                    #    DOCKER_IMAGE_NAME = matcher[0][1]
+                    #    DOCKER_IMAGE_TAG = matcher[0][2]
+                    #} #else {
+                    #    error "Commit message does not contain the required 'imageName' and 'version' format."
                     }
                 }
             }
@@ -38,7 +41,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ."
+                    sh "docker build -t ${DOCKER_IMAGE_NAME} ."
                 }
             }
         }
@@ -46,7 +49,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh "docker run -d --name ${DOCKER_IMAGE_NAME}-container ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                    sh "docker run -d --name ${DOCKER_IMAGE_NAME}-container ${DOCKER_IMAGE_NAME}"
                 }
             }
         }
