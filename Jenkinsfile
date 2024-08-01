@@ -14,7 +14,7 @@ pipeline {
         }
 
 
-        stage('Build Docker Image') {
+        stage('Build Docker mmImage') {
             steps {
                 script {
                     sh "docker build -t ${env.DOCKER_IMAGE_NAME} ."
