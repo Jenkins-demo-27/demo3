@@ -16,6 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh """ 
+        
                 docker build -t ${env.DOCKER_IMAGE_NAME} .
                 docker tag ${env.DOCKER_IMAGE_NAME} nisha-ThinkPad-T470/${env.DOCKER_IMAGE_NAME}
                 """
