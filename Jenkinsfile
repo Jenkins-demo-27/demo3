@@ -16,8 +16,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh """ 
-        
-                docker build -t ${env.DOCKER_IMAGE_NAME} .
                 docker login nisha-ThinkPad-T470 -u nisha -p 1234
                
                 """
