@@ -4,7 +4,7 @@ pipeline {
         DOCKER_IMAGE_NAME = sh(returnStdout: true, script: "git log -1 --pretty=%B").trim()
     }
     stages {
-        stage('Checkout') {
+        stage('Checkokut') {
             steps {
                 sh """
                 git clone "https://github.com/Jenkins-demo-27/demo3.git"
