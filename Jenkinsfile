@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh """ 
-               docker login 127.0.0.1:443 -u nisha -p 1234
+               docker login nisha-ThinkPad-T470:443 -u nisha -p 1234
                
                 """
             }
