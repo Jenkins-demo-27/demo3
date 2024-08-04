@@ -4,7 +4,7 @@ pipeline {
         DOCKER_IMAGE_NAME = sh(returnStdout: true, script: "git log -1 --pretty=%B").trim()
     }
     stages {
-        stage('Checkokut') {
+        stage('Checkout') {
             steps {
                 sh """
                 git clone "https://github.com/Jenkins-demo-27/demo3.git"
@@ -15,14 +15,19 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh """ 
-                writeFile file:"/etc/docker/daemon.json", text: "{
-                 "insecure-registries": [
-                  "127.0.0.1:443"
-                            ]
-                      }"
+                sh """
+                echo '{
+                    "insecure-registries": [
+                        "127.0.0.1:443"
+                    ]
+                }' | sudo tee /etc/docker/daemon.json
+
+                sudo systemctl restart docker
+
                 docker login 127.0.0.1:443 -u nisha -p 1234
-               
+
+                cd demo3  # Ensure you are in the correct directory
+                docker build -t ${env.DOCKER_IMAGE_NAME} .
                 """
             }
         }
