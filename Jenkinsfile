@@ -16,7 +16,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh """ 
-               docker login nisha-ThinkPad-T470:443 -u nisha -p 1234
+                writeFile file:"/etc/docker/daemon.json", text: "{
+                 "insecure-registries": [
+                  "127.0.0.1:443"
+                            ]
+                      }"
+                docker login 127.0.0.1:443 -u nisha -p 1234
                
                 """
             }
