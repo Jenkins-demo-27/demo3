@@ -18,7 +18,7 @@ pipeline {
                 sh """ 
         
                 docker build -t ${env.DOCKER_IMAGE_NAME} .
-                docker tag ${env.DOCKER_IMAGE_NAME} nisha-ThinkPad-T470/${env.DOCKER_IMAGE_NAME}
+                docker login nisha-ThinkPad-T470 -u nisha -p 1234
                 """
             }
         }
