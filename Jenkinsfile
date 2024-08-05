@@ -6,7 +6,7 @@ pipeline {
         stage('Build,, Docker Image') {
             steps {
                 sh """
-                docker login nisha-ThinkPad-T470:443 -u nisha -p 1234
+                docker login nisha-ThinkPad-T470 -u nisha -p 1234
                 """
             }
         }
