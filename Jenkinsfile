@@ -16,13 +16,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh """
-                echo '{
-                    "insecure-registries": [
-                        "127.0.0.1:443"
-                    ]
-                }' | sudo tee /etc/docker/daemon.json
-
-                sudo systemctl restart docker
 
                 docker login 127.0.0.1:443 -u nisha -p 1234
 
