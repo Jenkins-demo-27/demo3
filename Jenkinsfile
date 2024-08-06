@@ -6,7 +6,7 @@ pipeline {
         stage('Build,, Docker Image') {
             steps {
                 sh """
-                docker login example.com -u nisha -p 1234
+                docker login http://example.com -u nisha -p 1234
 
                 """
             }
